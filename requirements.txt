@@ -1,0 +1,10 @@
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.5
+joblib>=1.4
+optuna>=3.6
+mlflow>=3.0
+dvc>=3.50
+pyyaml>=6.0
+matplotlib>=3.8
+streamlit>=1.40

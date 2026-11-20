@@ -1,0 +1,27 @@
+# keep the image small: only app.py, .streamlit/ and the two model files are needed
+.git
+.github
+.dvc
+.dvcignore
+.gitignore
+.vscode
+.idea
+myenv
+venv
+.venv
+__pycache__
+*.pyc
+data
+src
+reports
+mlruns
+mlartifacts
+mlflow.db
+dvc.yaml
+dvc.lock
+params.yaml
+README.md
+Dockerfile
+.dockerignore
+models/candidates
+models/model_info.json
