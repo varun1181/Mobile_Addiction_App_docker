@@ -1,0 +1,185 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: data/raw/phone_addiction_dataset.csv
+      hash: md5
+      md5: 5093956ff225df7d507ab0af0215ec78
+      size: 595229
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 394c4b84bbac69b2ee54361fc669d366
+      size: 1593
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: Addiction_Level
+        data_ingestion:
+          raw_path: data/raw/phone_addiction_dataset.csv
+          test_size: 0.2
+    outs:
+    - path: data/ingested/test.csv
+      hash: md5
+      md5: 62343e0a00c5577909b4a4a382b7fe92
+      size: 122921
+    - path: data/ingested/train.csv
+      hash: md5
+      md5: 72d43c81eb96f20767073b1040de4620
+      size: 489032
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/ingested/test.csv
+      hash: md5
+      md5: 62343e0a00c5577909b4a4a382b7fe92
+      size: 122921
+    - path: data/ingested/train.csv
+      hash: md5
+      md5: 72d43c81eb96f20767073b1040de4620
+      size: 489032
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: c8872f7ab2580a5e022949d95beba410
+      size: 1816
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: Addiction_Level
+        data_preprocessing:
+          drop_columns:
+          - Name
+          - Location
+          rename_columns:
+            Interllectual_Performance: Intellectual_Performance
+    outs:
+    - path: data/processed/test_preprocessed.csv
+      hash: md5
+      md5: dccf0b02bc299a49085189f57ea4d9d5
+      size: 90020
+    - path: data/processed/train_preprocessed.csv
+      hash: md5
+      md5: 4f3b3984df37b2bad5d0bf924172d1ae
+      size: 358490
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/test_preprocessed.csv
+      hash: md5
+      md5: dccf0b02bc299a49085189f57ea4d9d5
+      size: 90020
+    - path: data/processed/train_preprocessed.csv
+      hash: md5
+      md5: 4f3b3984df37b2bad5d0bf924172d1ae
+      size: 358490
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 1585e3cadca794e400f3a93a7492ae51
+      size: 1317
+    params:
+      params.yaml:
+        feature_engineering:
+          epsilon: 1e-05
+          ratio_features:
+            Social_Media_Ratio:
+            - Time_on_Social_Media
+            - Daily_Usage_Hours
+            Gaming_Ratio:
+            - Time_on_Gaming
+            - Daily_Usage_Hours
+            Education_Ratio:
+            - Time_on_Education
+            - Daily_Usage_Hours
+    outs:
+    - path: data/processed/test_features.csv
+      hash: md5
+      md5: 70681cc9696185567cf1b040aec5da8f
+      size: 156348
+    - path: data/processed/train_features.csv
+      hash: md5
+      md5: 2bcbca341ea7fe644fc852e01e408b1e
+      size: 623360
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: data/processed/train_features.csv
+      hash: md5
+      md5: 2bcbca341ea7fe644fc852e01e408b1e
+      size: 623360
+    - path: src/model_building.py
+      hash: md5
+      md5: 777bc0b927d6017e7931a5da2d85d8f9
+      size: 8503
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: Addiction_Level
+        feature_engineering:
+          epsilon: 1e-05
+          ratio_features:
+            Social_Media_Ratio:
+            - Time_on_Social_Media
+            - Daily_Usage_Hours
+            Gaming_Ratio:
+            - Time_on_Gaming
+            - Daily_Usage_Hours
+            Education_Ratio:
+            - Time_on_Education
+            - Daily_Usage_Hours
+        model_building:
+          n_trials: 20
+          cv_folds: 3
+          n_jobs: -1
+          onehot_columns:
+          - Gender
+          - Phone_Usage_Purpose
+    outs:
+    - path: models
+      hash: md5
+      md5: 404d703ed3739f9b19a03fa21273af4e.dir
+      size: 18071391
+      nfiles: 8
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: data/processed/test_features.csv
+      hash: md5
+      md5: 70681cc9696185567cf1b040aec5da8f
+      size: 156348
+    - path: data/processed/train_features.csv
+      hash: md5
+      md5: 2bcbca341ea7fe644fc852e01e408b1e
+      size: 623360
+    - path: models
+      hash: md5
+      md5: 404d703ed3739f9b19a03fa21273af4e.dir
+      size: 18071391
+      nfiles: 8
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: b079c9d99d7b3c952ec25bf0fbbba50c
+      size: 6962
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: Addiction_Level
+        model_evaluation:
+          mlflow_tracking_uri: sqlite:///mlflow.db
+          experiment_name: Mobile_Addiction_Prediction
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: b302bf139c56fb1df5b9a53963ea459e
+      size: 209
+    - path: reports/model_comparison.csv
+      hash: md5
+      md5: 50348b8926e8e953d52ef9eb5a28f6b3
+      size: 719
+    - path: reports/model_comparison_chart.png
+      hash: md5
+      md5: 323ed23ead2f18ed9d1f81fa8dd26466
+      size: 86185
