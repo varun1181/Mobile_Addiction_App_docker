@@ -1,0 +1,192 @@
+{
+  "target": "Addiction_Level",
+  "target_min": 1.0,
+  "target_max": 10.0,
+  "best_model": "Gradient Boosting",
+  "all_columns": [
+    "Age",
+    "Gender",
+    "Daily_Usage_Hours",
+    "Sleep_Hours",
+    "Intellectual_Performance",
+    "Social_Interactions",
+    "Exercise_Hours",
+    "Anxiety_Level",
+    "Depression_Level",
+    "Self_Esteem",
+    "Screen_Time_Before_Bed",
+    "Phone_Checks_Per_Day",
+    "Apps_Used_Daily",
+    "Time_on_Social_Media",
+    "Time_on_Gaming",
+    "Time_on_Education",
+    "Phone_Usage_Purpose",
+    "Family_Communication",
+    "Weekend_Usage_Hours",
+    "Social_Media_Ratio",
+    "Gaming_Ratio",
+    "Education_Ratio"
+  ],
+  "engineered": [
+    "Social_Media_Ratio",
+    "Gaming_Ratio",
+    "Education_Ratio"
+  ],
+  "ratio_features": {
+    "Social_Media_Ratio": [
+      "Time_on_Social_Media",
+      "Daily_Usage_Hours"
+    ],
+    "Gaming_Ratio": [
+      "Time_on_Gaming",
+      "Daily_Usage_Hours"
+    ],
+    "Education_Ratio": [
+      "Time_on_Education",
+      "Daily_Usage_Hours"
+    ]
+  },
+  "epsilon": 1e-05,
+  "numeric": {
+    "Age": {
+      "min": 2.0,
+      "max": 100.0,
+      "median": 18.0,
+      "is_int": true
+    },
+    "Daily_Usage_Hours": {
+      "min": 0.0,
+      "max": 11.5,
+      "median": 5.0,
+      "is_int": false
+    },
+    "Sleep_Hours": {
+      "min": 3.0,
+      "max": 10.0,
+      "median": 6.5,
+      "is_int": false
+    },
+    "Intellectual_Performance": {
+      "min": 50.0,
+      "max": 100.0,
+      "median": 75.0,
+      "is_int": true
+    },
+    "Social_Interactions": {
+      "min": 0.0,
+      "max": 10.0,
+      "median": 5.0,
+      "is_int": true
+    },
+    "Exercise_Hours": {
+      "min": 0.0,
+      "max": 4.0,
+      "median": 1.0,
+      "is_int": false
+    },
+    "Anxiety_Level": {
+      "min": 1.0,
+      "max": 10.0,
+      "median": 6.0,
+      "is_int": true
+    },
+    "Depression_Level": {
+      "min": 1.0,
+      "max": 10.0,
+      "median": 5.0,
+      "is_int": true
+    },
+    "Self_Esteem": {
+      "min": 1.0,
+      "max": 10.0,
+      "median": 6.0,
+      "is_int": true
+    },
+    "Screen_Time_Before_Bed": {
+      "min": 0.0,
+      "max": 2.6,
+      "median": 1.0,
+      "is_int": false
+    },
+    "Phone_Checks_Per_Day": {
+      "min": 20.0,
+      "max": 150.0,
+      "median": 82.0,
+      "is_int": true
+    },
+    "Apps_Used_Daily": {
+      "min": 5.0,
+      "max": 20.0,
+      "median": 13.0,
+      "is_int": true
+    },
+    "Time_on_Social_Media": {
+      "min": 0.0,
+      "max": 5.0,
+      "median": 2.5,
+      "is_int": false
+    },
+    "Time_on_Gaming": {
+      "min": 0.0,
+      "max": 4.0,
+      "median": 1.5,
+      "is_int": false
+    },
+    "Time_on_Education": {
+      "min": 0.0,
+      "max": 3.0,
+      "median": 1.0,
+      "is_int": false
+    },
+    "Family_Communication": {
+      "min": 1.0,
+      "max": 10.0,
+      "median": 5.0,
+      "is_int": true
+    },
+    "Weekend_Usage_Hours": {
+      "min": 0.0,
+      "max": 14.0,
+      "median": 6.0,
+      "is_int": false
+    }
+  },
+  "categorical": {
+    "Gender": [
+      "Female",
+      "Male",
+      "Other"
+    ],
+    "Phone_Usage_Purpose": [
+      "Browsing",
+      "Education",
+      "Gaming",
+      "Other",
+      "Social Media"
+    ]
+  },
+  "defaults": {
+    "Age": 16,
+    "Gender": "Male",
+    "Daily_Usage_Hours": 4.9,
+    "Sleep_Hours": 7.1,
+    "Intellectual_Performance": 93,
+    "Social_Interactions": 8,
+    "Exercise_Hours": 0.0,
+    "Anxiety_Level": 6,
+    "Depression_Level": 1,
+    "Self_Esteem": 7,
+    "Screen_Time_Before_Bed": 0.8,
+    "Phone_Checks_Per_Day": 36,
+    "Apps_Used_Daily": 17,
+    "Time_on_Social_Media": 2.5,
+    "Time_on_Gaming": 0.0,
+    "Time_on_Education": 0.0,
+    "Phone_Usage_Purpose": "Other",
+    "Family_Communication": 7,
+    "Weekend_Usage_Hours": 5.7,
+    "Social_Media_Ratio": 0.0,
+    "Gaming_Ratio": 0.0,
+    "Education_Ratio": 0.0
+  }
+}
