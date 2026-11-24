@@ -76,16 +76,22 @@ div[class*="st-key-sec_"] { background: rgba(255,255,255,0.6); border: 1px solid
 # ----------------------------------------------------------------------------
 # Load model + schema (created by the training script)
 # ----------------------------------------------------------------------------
+def find_file(name):
+    for path in (BASE / "models" / name, BASE / name):
+        if path.exists():
+            return path
+    raise FileNotFoundError(name)
+
+
 @st.cache_data
 def load_schema():
-    with open(BASE / "models" / "feature_schema.json") as f:
+    with open(find_file("feature_schema.json")) as f:
         return json.load(f)
 
 
 @st.cache_resource
 def load_model():
-    return joblib.load(BASE / "models" / "best_model.pkl")
-
+    return joblib.load(find_file("best_model.pkl"))
 
 try:
     schema = load_schema()
